@@ -34,7 +34,7 @@ function print_poly(p::Polinomial_of_one_variable)
             end
         end
     end
-    return poly
+    println(poly)
 end
 
 function sum_of_pol(p1::Polinomial_of_one_variable, p2::Polinomial_of_one_variable)::Polinomial_of_one_variable
