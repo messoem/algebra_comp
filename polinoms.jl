@@ -3,8 +3,6 @@ Base.@kwdef mutable struct Polynom
 end
 
 
-
-
 ord(p::Polynom) = length(p.coef) - 1
 
 function Base.display(p::Polynom)
@@ -104,4 +102,23 @@ function Base. *(p1::Polynom, p2::Polynom)::Polynom
     return Polynom(lst)
 end
 
+function value(p::Polynom, a::T):: T where T
+    pval = 0
+    for i in 1:length(p.coef) 
+        pval+= p.coef[i]*(a^(i-1))
+    end
+    return pval
+end
 
+
+p = Polynom([1, 3, 2])
+p1 = Polynom([4, 5, 2])
+
+print(p1*p)
+x = Polynom([-1, 0, 2, 4, 0, -8])
+print(x)
+p2 = Polynom([1, 3, -2, 0,  4])
+print(p2)
+p3 = Polynom([-1, 3, -3, 1])
+print(p3)
+print(value(p3, 2))
