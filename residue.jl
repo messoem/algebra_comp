@@ -16,8 +16,11 @@ function Base. -(x::Residue{T, M}, y::Residue{T, M}) where {T, M}
     return Residue{Int, M}(c)
 end
 
-function Base.display(x::Residue{T, M}) where {T, M}
+function Base.println(x::Residue{T, M}) where {T, M}
     println(x.a)
+end
+function Base.print(x::Residue{T, M}) where {T, M}
+    print(x.a)
 end
 function Base. !(x::Residue{T, M}) where {T, M}
     a, v, u = ecd(x, M)
