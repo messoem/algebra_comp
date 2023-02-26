@@ -23,7 +23,7 @@ function Base.print(x::Residue{T, M}) where {T, M}
     print(x.a)
 end
 function Base. !(x::Residue{T, M}) where {T, M}
-    a, v, u = ecd(x, M)
+    a, v, u = ecd(x.a, M)
     if a != 1
         return Nothing
     else
