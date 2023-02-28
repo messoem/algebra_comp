@@ -114,6 +114,39 @@ function value(p::Polynom{T}, a::T):: T where T
     return pval
 end
 
+function Base. /(a::Polynom{T}, b::Polynom{T}) where T
+    if length(a.coef)<length(b.coef)
+        return 0, a
+    else
+        s = a
+        w = b
+        t::Vector{T} = []
+        for i in 1:length(s.coef)
+            push!(t,T(0))
+        end
+        while length(s.coef)>=length(b.coef)            
+            coef = s.coef[end]/b.coef[end]
+            poli = length(s.coef)-length(b.coef)
+            q::Vector{T} = []
+            for k in 1:poli
+                push!(q,T(0))
+            end
+            push!(q,coef)
+            t[length(q)] = coef
+            s -= Polynom(q)*b
+            if length(s.coef) !=0
+                while s.coef[end]==T(0)
+                    deleteat!(s.coef,length(s.coef))
+                    if length(s.coef) == 0
+                        break
+                    end
+                end  
+            end
+        end
+    end   
+    return s,Polynom(t)
+end
+
 
 p = Polynom{BigInt}([1, 3, 2])
 p1 = Polynom{BigInt}([4, 5, 2])
