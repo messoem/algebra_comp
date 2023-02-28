@@ -227,6 +227,20 @@ function Base. isless(x::T, y::Residue{T, M}) where {T, M}
     
 end
 
+function inverse(a::Residue{T,M}) where {T,M}
+    f = get_value(a)
+    d = M
+    if(gcp(f,M) != 1)
+        return 0
+    end
+    s1,s2,s3 = egcp(mod(f,M),M)
+    return Residue{T,M}(s2) #ab = 1 + nm ab - nm = 1
+end
+
+function Base. /(a::Residue{T, M}, b::Residue{T, M}) where {T, M}
+    return a*inverse(b)
+end
+
 function Base.println(x::Residue{T, M}) where {T, M}
     println(x.a)
 end
@@ -277,15 +291,7 @@ function Base. +(x::T, y::Residue{T, M}) where {T, M}
     
 end
 
-function inverse(a::Residue{T,M}) where {T,M}
-    f = get_value(a)
-    d = M
-    if(gcp(f,M) != 1)
-        return 0
-    end
-    s1,s2,s3 = egcp(mod(f,M),M)
-    return Residue{T,M}(s2) #ab = 1 + nm ab - nm = 1
-end
+
 
 a = Residue{Int, 10}(3)
 b = Residue{Int, 10}(5)
@@ -299,4 +305,6 @@ println((p1/p2)[2])
 pr = Polynom([Residue{Int, 10}(12), Residue{Int, 10}(1), Residue{Int, 10}(9)])
 pr2 = Polynom([Residue{Int, 10}(3), Residue{Int, 10}(12), Residue{Int, 10}(7)])
 println(pr+pr2)
+println(pr-pr2)
 println(pr*pr2)
+println((pr/pr2)[1])
